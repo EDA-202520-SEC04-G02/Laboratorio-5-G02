@@ -195,3 +195,14 @@ def sub_list(my_list, pos, num_elements):
         node = node["next"]
 
     return newlist
+
+def default_sort_criteria(element_1, element_2):
+    is_sorted = False
+    if element_1 < element_2:
+        is_sorted = True
+    return is_sorted
+
+def selection_sort(my_list,default_sort_criteria):
+    
+    current = my_list["first"]
+    

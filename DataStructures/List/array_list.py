@@ -127,3 +127,56 @@ def sub_list(my_list,pos_i,num_elements):
     
     
     return new_list
+
+
+def default_sort_criteria(element_1, element_2):
+    is_sorted = False
+    if element_1 < element_2:
+        is_sorted = True
+    return is_sorted
+
+def selection_sort(my_list,default_sort_criteria):
+    
+    n = my_list["size"]
+    
+    for i in range(n-1):
+        min_index= i
+        for j in range(i+1,n):
+            if default_sort_criteria(my_list["elements"][i],my_list["elements"]["j"]):
+                min_index = j
+        if min_index != i:
+            my_list["elements"][i]= my_list["elements"][min_index]
+            my_list["elements"][min_index]= my_list["elements"][i]
+    
+    return my_list
+
+def insertion_sort(my_list, default_sort_criteria):
+    
+    n= my_list["size"]
+    
+    for i in range(1,n):
+        key = my_list["elements"][i]
+        j = i-1
+        while j >=0 and my_list["elements"][j]>key:
+            my_list["elements"][j+1]= my_list["elements"][j]
+            j-=1
+        my_list["elements"][j+1] = key
+    
+    return my_list
+
+def shell_sort(my_list):
+    n= my_list["size"]
+    h= 1
+    while h < n //3:
+        h=3*h+1
+        
+    while h > 0:
+        for i in range(h,n):
+            key= my_list["elements"][i]
+            j= i
+            while j >= h and my_list["elements"][j-h]>key:
+                my_list["elements"][j] = my_list["elements"][j-h]
+                j -= h
+            my_list["elements"][j]= key
+        h//=3
+    return my_list

@@ -202,7 +202,44 @@ def default_sort_criteria(element_1, element_2):
         is_sorted = True
     return is_sorted
 
-def selection_sort(my_list,default_sort_criteria):
-    
-    current = my_list["first"]
+def selection_sort(my_list, sort_crit):
+    n = size(my_list)
+    for i in range(n - 1):
+        min_index = i
+        for j in range(i + 1, n):
+            if sort_crit(get_element(my_list, j), get_element(my_list, min_index)):
+                min_index = j
+        if min_index != i:
+            exchange(my_list, i, min_index)
+    return my_list
+
+
+def insertion_sort(my_list, sort_crit):
+    n = size(my_list)
+    for i in range(1, n):
+        key = get_element(my_list, i)
+        j = i - 1
+        while j >= 0 and not sort_crit(get_element(my_list, j), key):
+            change_info(my_list, j + 1, get_element(my_list, j))
+            j -= 1
+        change_info(my_list, j + 1, key)
+    return my_list
+
+
+def shell_sort(my_list, sort_crit):
+    n = size(my_list)
+    h = 1
+    while h < n // 3:
+        h = 3 * h + 1
+    while h > 0:
+        for i in range(h, n):
+            key = get_element(my_list, i)
+            j = i
+            while j >= h and not sort_crit(get_element(my_list, j - h), key):
+                change_info(my_list, j, get_element(my_list, j - h))
+                j -= h
+            change_info(my_list, j, key)
+        h //= 3
+    return my_list
+
     

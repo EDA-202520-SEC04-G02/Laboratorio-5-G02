@@ -196,6 +196,8 @@ def sub_list(my_list, pos, num_elements):
 
     return newlist
 
+# Ordenamiento Iterativo Lab5
+
 def default_sort_criteria(element_1, element_2):
     is_sorted = False
     if element_1 < element_2:
@@ -242,4 +244,45 @@ def shell_sort(my_list, sort_crit):
         h //= 3
     return my_list
 
+# Ahora los recursivos
+
+def merge_sort(my_list, sort_crit):
+    n = size(my_list)
+    if n <= 1:
+            return my_list
+    mid = n // 2
+    left_half = sub_list(my_list, 0, mid)
+    # right_half = sub_list(my_list, mid, n) Esto ya no funciona por la forma en la que se implemento sub_list para single linked list
+    right_half = sub_list(my_list, mid, n-mid)
+
     
+    left_half = merge_sort(left_half, sort_crit)
+    right_half = merge_sort(right_half, sort_crit)
+    
+    return merge(left_half, right_half, sort_crit)
+    
+def merge(left, right, sort_crit):
+    """
+    Mezcla dos listas ordenadas en una sola lista ordenada.
+    """
+    result = new_list()
+    i = j = 0
+    
+    while i < size(left) and j < size(right):
+        if sort_crit(get_element(left, i), get_element(right, j)):
+            add_last(result, get_element(left, i))
+            i += 1
+        else:
+            add_last(result, get_element(right, j))
+            j += 1
+    
+    while i < size(left):
+        add_last(result, get_element(left, i))
+        i += 1
+    while j < size(right):
+        add_last(result, get_element(right, j))
+        j += 1
+    return result
+
+def quick_sort(my_list, sort_crit):
+    pass

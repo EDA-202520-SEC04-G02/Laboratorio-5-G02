@@ -180,40 +180,72 @@ def shell_sort(my_list, sort_crit):
 # Ahora los recursivos
 
 def merge_sort(my_list, sort_crit):
-    n = size(my_list)
-    if n <= 1:
+    n = size(my_list) # Encontamos el tamaño
+    if n <= 1: # Caso base
             return my_list
-    mid = n // 2
-    left_half = sub_list(my_list, 0, mid)
-    right_half = sub_list(my_list, mid, n)
+    mid = n // 2 # Vamos por la mitad
+    left_half = sub_list(my_list, 0, mid) # mitad <-
+    right_half = sub_list(my_list, mid, n) # mitad ->
     
-    left_half = merge_sort(left_half, sort_crit)
+    left_half = merge_sort(left_half, sort_crit) # Esta es la parte iterativa, recordar pasarle el sort_crit
     right_half = merge_sort(right_half, sort_crit)
     
-    return merge(left_half, right_half, sort_crit)
+    return merge(left_half, right_half, sort_crit) # Antes de devolver organizamos
     
 def merge(left, right, sort_crit):
     """
-    Mezcla dos listas ordenadas en una sola lista ordenada.
+    Mezcla dos listas ordenadas en una sola lista ordenada. # < Me lo robe de las presentaciones de Eduardo >:)
     """
     result = new_list()
-    i = j = 0
+    i = j = 0 
     
-    while i < size(left) and j < size(right):
-        if sort_crit(get_element(left, i), get_element(right, j)):
-            add_last(result, get_element(left, i))
+    while i < size(left) and j < size(right): # Mientras tengamos datos iteramos
+        if sort_crit(get_element(left, i), get_element(right, j)): # metemos los primeros datos de left y right
+            add_last(result, get_element(left, i)) # Este es si gana izquierda
             i += 1
-        else:
+        else: # Este es si gana derecha
             add_last(result, get_element(right, j))
             j += 1
-    
-    while i < size(left):
+    # Aquí ta salimos y nos quedamos sin listas que organizar (Pero no sin elementos)
+    while i < size(left): # Aquí es que quedaron en left y se deben meter todos
         add_last(result, get_element(left, i))
         i += 1
-    while j < size(right):
+    while j < size(right): # Aquí es que se quedaron en right y se deben meter todolos los que faltaron
         add_last(result, get_element(right, j))
         j += 1
     return result
 
 def quick_sort(my_list, sort_crit):
     pass
+
+def quick_sort(arr, low=0, high=None):
+    """
+    Ordena una lista en orden ascendente utilizando el algoritmo 
+    Quick Sort in-place.
+    
+    :param arr: Lista de elementos a ordenar.
+    :type arr: list
+    :param low: Índice inferior de la partición actual.
+    :type low: int
+    :param high: Índice superior de la partición actual.
+    :type high: int
+    """
+    if high is None:
+        high = size(arr) - 1
+    
+    def partition(lst, low, high):
+        pivot = lst[high]  # Pivote como último elemento
+        i = low  # Índice del menor elemento
+        for j in range(low, high):
+            if lst[j] < pivot:
+                lst[i], lst[j] = lst[j], lst[i]  # Intercambio
+                i += 1
+        lst[i], lst[high] = lst[high], lst[i]  # Colocar el pivote en su lugar
+        return i
+    
+    if low < high:
+        pivot_index = partition(arr, low, high)
+        quick_sort(arr, low, pivot_index - 1)
+        quick_sort(arr, pivot_index + 1, high)
+    
+    return arr

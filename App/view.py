@@ -53,11 +53,13 @@ def print_menu():
     Menu de usuario
     """
     print("Bienvenido")
-    #TODO: agregar opción 0 para escoger el tipo de estructura de datos y opción 5 para seleccionar el algoritmo de ordenamiento
+    #TODO DONE: agregar opción 0 para escoger el tipo de estructura de datos y opción 5 para seleccionar el algoritmo de ordenamiento
+    print("0- Seleccionar tipo de estructura de datos (ArrayList o LinkedList)")
     print("1- Cargar información en el catálogo")
     print("2- Consultar la información de un libro")
     print("3- Consultar los libros de un autor")
     print("4- Libros por género")
+    print("5- Algoritmo de sorting")
     print("6- Seleccionar muestra de libros")
     print("7- Ordenar los libros por rating")
     print("8- Salir")
@@ -144,10 +146,12 @@ def print_sort_results(sort_books, sample=3):
         if sample > 0:
             # Obtener el libro en la posición actual.
             book = data_structure.get_element(sorted_books, book_pos)
-            # TODO: Completar la lógica para imprimir la información del libro.
+            # TODO DONE: Completar la lógica para imprimir la información del libro.
+            print_book_info(book)
             # Disminuir el contador de la muestra.
             sample -= 1
-
+        else: # No es necesario, pero mejora la eficiencia
+            break
 # variables utiles para el programa
 
 data_str="""Seleccione el algoritmo de estructura de datos:
@@ -190,7 +194,11 @@ def main():
         elif int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
             bk, at, tg, bktg = load_data(control)
-            #TODO: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
+            #TODO DONE: imprimir la cantidad de libros, autores, géneros y asociaciones de géneros a libros cargados
+            print('Libros cargados: ' + str(bk))
+            print('Autores cargados: ' + str(at))
+            print('Tags cargados: ' + str(tg))
+            print('Asociaciones de Tags a Libros cargadas: ' + str(bktg))
 
         elif int(inputs[0]) == 2:
             number = input("Ingrese el id del libro que desea buscar: ")
@@ -221,7 +229,9 @@ def main():
         elif int(inputs[0]) == 7:
             print("Ordenando los libros por rating ...")
             result = logic.sort_books(control)
-            #TODO:imprimir el resultado del ordenamiento 
+            #TODO DONE:imprimir el resultado del ordenamiento 
+            print("Muestra de libros ordenados:")
+            print_sort_results(result, sample=3)
             print("Tiempo de ejecución:", f"{result[1]:.3f}", "[ms]")
 
         elif int(inputs[0]) == 8:

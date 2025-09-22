@@ -216,36 +216,32 @@ def merge(left, right, sort_crit):
     return result
 
 def quick_sort(my_list, sort_crit):
-    pass
+    n = size(my_list)
+    if n <= 1:  # Caso base
+        return my_list
+    
+    pivot = get_element(my_list, n - 1)  # Usamos el último elemento como pivote
+    left = new_list()
+    right = new_list()
 
-def quick_sort(arr, low=0, high=None):
-    """
-    Ordena una lista en orden ascendente utilizando el algoritmo 
-    Quick Sort in-place.
+    # Dividir en dos listas
+    for i in range(n - 1):  # hasta el penúltimo
+        elem = get_element(my_list, i)
+        if sort_crit(elem, pivot):  # Si elem < pivote
+            add_last(left, elem)
+        else:
+            add_last(right, elem)
     
-    :param arr: Lista de elementos a ordenar.
-    :type arr: list
-    :param low: Índice inferior de la partición actual.
-    :type low: int
-    :param high: Índice superior de la partición actual.
-    :type high: int
-    """
-    if high is None:
-        high = size(arr) - 1
-    
-    def partition(lst, low, high):
-        pivot = lst[high]  # Pivote como último elemento
-        i = low  # Índice del menor elemento
-        for j in range(low, high):
-            if lst[j] < pivot:
-                lst[i], lst[j] = lst[j], lst[i]  # Intercambio
-                i += 1
-        lst[i], lst[high] = lst[high], lst[i]  # Colocar el pivote en su lugar
-        return i
-    
-    if low < high:
-        pivot_index = partition(arr, low, high)
-        quick_sort(arr, low, pivot_index - 1)
-        quick_sort(arr, pivot_index + 1, high)
-    
-    return arr
+    # Ordenar recursivamente
+    left = quick_sort(left, sort_crit)
+    right = quick_sort(right, sort_crit)
+
+    # Combinar resultados
+    result = new_list()
+    for i in range(size(left)):
+        add_last(result, get_element(left, i))
+    add_last(result, pivot)
+    for i in range(size(right)):
+        add_last(result, get_element(right, i))
+
+    return result

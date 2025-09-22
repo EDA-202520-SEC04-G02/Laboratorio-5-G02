@@ -286,3 +286,43 @@ def merge(left, right, sort_crit):
 
 def quick_sort(my_list, sort_crit):
     pass
+
+def quick_sort(my_list, sort_crit):
+    if size(my_list) <= 1:  # Caso base
+        return my_list
+
+    pivot = get_element(my_list, size(my_list) - 1)  # Último nodo como pivote
+    left = new_list()
+    right = new_list()
+
+    current = my_list["first"]
+    count = 0
+    while count < size(my_list) - 1:  # hasta el penúltimo
+        elem = current["info"]
+        if sort_crit(elem, pivot):  # elem < pivote
+            add_last(left, elem)
+        else:
+            add_last(right, elem)
+        current = current["next"]
+        count += 1
+
+    # Recursión
+    left = quick_sort(left, sort_crit)
+    right = quick_sort(right, sort_crit)
+
+    # Combinar resultados
+    result = new_list()
+    # Agregar todos los de la izquierda
+    current = left["first"]
+    while current:
+        add_last(result, current["info"])
+        current = current["next"]
+    # Agregar el pivote
+    add_last(result, pivot)
+    # Agregar todos los de la derecha
+    current = right["first"]
+    while current:
+        add_last(result, current["info"])
+        current = current["next"]
+
+    return result
